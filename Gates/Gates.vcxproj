@@ -128,12 +128,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Gate.cpp" />
+    <ClCompile Include="GateAppearance.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Globals.h" />
-    <ClCompile Include="MainGameLoop.cpp" />
+    <ClCompile Include="Engine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Circuit.h" />
     <ClInclude Include="Gate.h" />
+    <ClInclude Include="LogicSignalInterface.h" />
     <ClInclude Include="olcPixelGameEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

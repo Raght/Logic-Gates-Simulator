@@ -2,23 +2,111 @@
 #include "olcPixelGameEngine.h"
 
 
-inline const std::map<uint64_t, uint64_t> MAP_NOT_CACHED; 
+using logic_table = std::unordered_map<uint32_t, uint32_t>;
+
+inline const logic_table MAP_NOT_CACHED;
 
 
-class Gate
+uint32_t booleans_to_uint32_t(std::vector<bool> booleans, bool& successful_conversion, bool reverse_order = false)
+{
+	if (booleans.size() > 32)
+	{
+		successful_conversion = false;
+		return 0xFFFFFFFF;
+	}
+
+	uint32_t booleans_as_integer = 0;
+	if (!reverse_order)
+	{
+		for (int i = 0; i < booleans.size(); i++)
+		{
+			booleans_as_integer |= (1 << i) & (uint32_t)booleans[i] << i;
+		}
+	}
+	else
+	{
+		for (int i = 0; i < booleans.size(); i++)
+		{
+			booleans_as_integer |= (1 << i) & (uint32_t)booleans[booleans.size() - 1 - i] << i;
+		}
+	}
+
+	return booleans_as_integer;
+}
+
+std::vector<bool> uint32_t_as_booleans(uint32_t integer, bool reverse_order = false)
+{
+	std::vector<bool> booleans;
+
+	if (!reverse_order)
+	{
+		for (int i = booleans.size() - 1; i >= 0; i--)
+		{
+			uint32_t boolean_as_integer = 0;
+			boolean_as_integer = ((1 << i) & integer) >> i;
+			booleans.push_back((bool)boolean_as_integer);
+		}
+	}
+	else
+	{
+		for (int i = 0; i < booleans.size(); i++)
+		{
+			uint32_t boolean_as_integer = 0;
+			boolean_as_integer = ((1 << i) & integer) >> i;
+			booleans.push_back((bool)boolean_as_integer);
+		}
+	}
+
+	return booleans;
+}
+
+
+class OutputInterface
+{
+	bool* pOutput = nullptr;
+	bool output;
+
+	void UpdateState();
+};
+class InputInterface
+{
+	bool input;
+};
+
+
+class InputsToOutputsMatch
+{
+
+};
+
+class Gate 
 {
 public:
 	Gate();
-	Gate(...);
+	Gate(logic_table logic_table, GateAppearence gate_appearence);
+	Gate(const Circuit& circuit);
 
 	void CacheLogicTable();
-
+	
+	void ChangeInputs();
+	void UpdateOutputs();
 
 public:
 	olc::vi2d position;
-	olc::Decal* decal;
+	bool is_custom = false;
+
 	
-	std::vector<bool*> inputs;
-	std::vector<bool*> outputs;
-	std::map<uint64_t, uint64_t> logic_table_cached = MAP_NOT_CACHED;
+	
+
+public:
+	int inputs_size() const;
+	int outputs_size() const;
+
+private:
+	std::vector<bool> inputs;
+	std::vector<bool*> outputs_bools;
+	logic_table logic_table_cached = MAP_NOT_CACHED;
+
+	friend class OutputInterface;
+	friend class InputInterface;
 };
