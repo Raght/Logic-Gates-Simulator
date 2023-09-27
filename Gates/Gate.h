@@ -102,9 +102,14 @@ public:
 	int inputs_size() const;
 	int outputs_size() const;
 
+	std::vector<Gate*> outputs_gates;
+	std::vector<bool*> outputs_bools;
+
+	std::vector<bool> GetInputs() const;
+
 private:
 	std::vector<bool> inputs;
-	std::vector<bool*> outputs_bools;
+	
 	logic_table logic_table_cached = MAP_NOT_CACHED;
 
 	friend class OutputInterface;

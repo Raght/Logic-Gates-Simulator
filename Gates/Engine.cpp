@@ -1,6 +1,7 @@
 #include "olcPixelGameEngine.h"
 #include "Globals.h"
 #include "Gate.h"
+#include "UserDefinedInput.h"
 
 
 class Engine : public olc::PixelGameEngine
@@ -11,6 +12,7 @@ public:
 		sAppName = "Logic Gates Simulator";
 	}
 
+	std::vector<UserDefinedInput> user_defined_inputs;
 	std::vector<Gate> gates;
 
 	bool OnUserCreate() override
@@ -39,8 +41,8 @@ public:
 	bool OnUserUpdate(float fElapsedTime) override
 	{
 		// Update user defined inputs
-
-
+		std::vector<Gate*> gates_with_known_updated_input;
+		
 
 
 		// Update gates
@@ -48,12 +50,10 @@ public:
 		std::vector<int> order_to_traverse_gates;
 		// BFS-like wave propagation from gates with outputs connected to no other gates
 		// gives us the correct order to traverse and update gates
-		
-		std::vector<int> gates_with_known_input;
 
-		for (Gate& gate : gates)
+		for (Gate& gate : gates_with_known_updated_input)
 		{
-			if (gate)
+			if (gates.in)
 		}
 
 

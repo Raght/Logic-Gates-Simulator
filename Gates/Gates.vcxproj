@@ -133,11 +133,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Globals.h" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="UserDefinedInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circuit.h" />
     <ClInclude Include="Gate.h" />
-    <ClInclude Include="LogicSignalInterface.h" />
+    <ClInclude Include="UserDefinedInput.h" />
     <ClInclude Include="olcPixelGameEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
